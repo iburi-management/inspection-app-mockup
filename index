@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>入居・退去立会いアプリ モックアップ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e7eb;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #app-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            max-height: 896px;
+            background-color: #f3f4f6;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .view-screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            background-color: #f3f4f6;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .view-screen.active {
+            display: flex;
+        }
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .scroll-content::-webkit-scrollbar {
+            display: none;
+        }
+        .fab-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+        }
+        .bg-app-blue { background-color: #1a73e8; }
+        .text-app-blue { color: #1a73e8; }
+        #signature-pad {
+            width: 100%;
+            height: 200px;
+            background-color: #fff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.5rem;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <div id="view-property-list" class="view-screen active">
+            <header class="bg-app-blue text-white p-4 shadow-md flex justify-between items-center z-10">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bars text-xl"></i>
+                    <h1 class="text-lg font-semibold">物件一覧</h1>
+                </div>
+                <i class="fas fa-search text-xl"></i>
+            </header>
+            
+            <div class="scroll-content p-2">
+                <div class="bg-white p-3 rounded-lg shadow-sm mb-3 flex items-center text-gray-500">
+                    <i class="fas fa-search mr-2"></i>
+                    <span class="text-sm">メゾン青葉</span>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                    <!-- 101号室 -->
+                    <div class="p-4 border-b border-gray-100 flex justify-between items-center active:bg-gray-50 cursor-pointer" onclick="navigateTo('view-property-detail')">
+                        <div>
+                            <div class="font-semibold text-gray-800">メゾン青葉 101号室</div>
+                            <div class="text-xs text-blue-600 mt-1"><i class="fas fa-clipboard mr-1"></i>未点検</div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                    <!-- 102号室 -->
+                    <div class="p-4 border-b border-gray-100 flex justify-between items-center active:bg-gray-50 cursor-pointer" onclick="navigateTo('view-property-detail-102')">
+                        <div>
+                            <div class="font-semibold text-gray-800">メゾン青葉 102号室</div>
+                            <div class="text-xs text-green-600 mt-1"><i class="fas fa-check-circle mr-1"></i>入居時点検済</div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                    <!-- 201号室 -->
+                    <div class="p-4 flex justify-between items-center opacity-50 bg-gray-50">
+                        <div>
+                            <div class="font-semibold text-gray-800">メゾン青葉 201号室</div>
+                            <div class="text-xs text-gray-500 mt-1"><i class="fas fa-archive mr-1"></i>完了につきアーカイブ済</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-property-detail" class="view-screen">
+            <header class="bg-app-blue text-white p-4 shadow-md flex items-center z-10">
+                <i class="fas fa-arrow-left text-xl mr-4 cursor-pointer" onclick="navigateTo('view-property-list')"></i>
+                <h1 class="text-lg font-semibold">物件詳細</h1>
+            </header>
+            
+            <div class="scroll-content p-4">
+                <div class="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800 mb-1">メゾン青葉 101号室</h2>
+                    <div class="flex gap-2 text-sm mt-3">
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">未点検</span>
+                    </div>
+                </div>
+
+                <h3 class="text-sm font-semibold text-gray-500 mb-2">履歴</h3>
+                <div class="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-100">
+                    <p class="text-gray-400 text-sm">記録なし</p>
+                </div>
+            </div>
+
+            <div class="fab-bottom">
+                <button onclick="navigateTo('view-inspection-form')" class="w-full bg-app-blue text-white font-bold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center hover:bg-blue-700 transition active:scale-95">
+                    <i class="fas fa-play mr-2"></i> 新規入居前点検を開始
+                </button>
+            </div>
+        </div>
+
+        <div id="view-inspection-form" class="view-screen">
+            <header class="bg-white text-gray-800 p-4 shadow-sm flex justify-between items-center z-10 border-b">
+                <div class="flex items-center">
+                    <i class="fas fa-times text-xl mr-4 cursor-pointer text-gray-500" onclick="navigateTo('view-property-detail')"></i>
+                    <h1 class="text-lg font-semibold">入居前点検を開始</h1>
+                </div>
+                <button class="text-app-blue font-bold" onclick="navigateTo('view-inspection-detail')">保存</button>
+            </header>
+            
+            <div class="scroll-content p-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">入居予定者名 (任意)</label>
+                    <input type="text" placeholder="例: 田中 太郎" class="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:border-blue-500 text-lg">
+                </div>
+            </div>
+        </div>
+
+        <div id="view-inspection-detail" class="view-screen">
+            <header class="bg-app-blue text-white p-4 shadow-md flex items-center z-10">
+                <i class="fas fa-arrow-left text-xl mr-4 cursor-pointer" onclick="navigateTo('view-property-list')"></i>
+                <h1 class="text-lg font-semibold">入居前点検</h1>
+            </header>
+            
+            <div class="scroll-content p-0">
+                <div class="bg-white p-4 shadow-sm mb-2">
+                    <div class="flex justify-between items-start">
+                        <h2 class="font-bold text-gray-800">メゾン青葉 101号室</h2>
+                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold">未点検</span>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-700 text-sm mb-3">キズ・汚れの記録</h3>
+                    <div id="defect-list" class="space-y-3">
+                        <div id="empty-defect-msg" class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <i class="fas fa-clipboard-check text-3xl text-gray-300 mb-2"></i>
+                            <p class="text-gray-400 text-sm">記録なし</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fab-bottom flex gap-2">
+                <button onclick="openAddDefect('inspection')" class="flex-1 bg-white border-2 border-app-blue text-app-blue font-bold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center hover:bg-blue-50 transition active:scale-95">
+                    <i class="fas fa-plus mr-2"></i> キズを追加
+                </button>
+                <button onclick="showCompleteToast('view-property-list')" class="flex-1 bg-app-blue text-white font-bold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center hover:bg-blue-700 transition active:scale-95">
+                    <i class="fas fa-check mr-2"></i> 完了
+                </button>
+            </div>
+        </div>
+
+        <div id="view-add-defect" class="view-screen">
+            <header class="bg-white text-gray-800 p-4 shadow-sm flex justify-between items-center z-10 border-b">
+                <div class="flex items-center">
+                    <i class="fas fa-times text-xl mr-4 cursor-pointer text-gray-500" onclick="goBackFromDefect()"></i>
+                    <h1 class="text-lg font-semibold">キズ記録</h1>
+                </div>
+                <button class="text-app-blue font-bold" onclick="addDefectAndReturn()">保存</button>
+            </header>
+            
+            <div class="scroll-content p-4 bg-white">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">部屋 <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                        <select id="defect-room" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3">
+                            <option value="">選択してください</option>
+                            <option value="玄関">玄関</option>
+                            <option value="廊下">廊下</option>
+                            <option value="リビング">リビング</option>
+                            <option value="洋室1">洋室1</option>
+                            <option value="洋室2">洋室2</option>
+                            <option value="水回り">水回り</option>
+                            <option value="その他">その他</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">引き写真 <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-gray-400 bg-gray-50 cursor-pointer hover:bg-gray-100" onclick="simulateCamera('引き')">
+                            <i class="fas fa-camera text-3xl mb-2"></i>
+                            <span class="text-sm font-medium">撮影</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">寄り写真 <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-gray-400 bg-gray-50 cursor-pointer hover:bg-gray-100" onclick="simulateCamera('寄り')">
+                            <i class="fas fa-camera text-3xl mb-2"></i>
+                            <span class="text-sm font-medium">接写</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">コメント (任意)</label>
+                        <textarea id="defect-comment" rows="2" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-3" placeholder="入力"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-property-detail-102" class="view-screen">
+            <header class="bg-app-blue text-white p-4 shadow-md flex items-center z-10">
+                <i class="fas fa-arrow-left text-xl mr-4 cursor-pointer" onclick="navigateTo('view-property-list')"></i>
+                <h1 class="text-lg font-semibold">物件詳細</h1>
+            </header>
+            
+            <div class="scroll-content p-4">
+                <div class="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800 mb-1">メゾン青葉 102号室</h2>
+                    <div class="flex gap-2 text-sm mt-3">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full font-semibold">入居時点検済</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-semibold text-gray-500">360度写真</h3>
+                    <button onclick="navigateTo('view-add-360photo')" class="text-app-blue text-sm font-bold"><i class="fas fa-plus mr-1"></i>追加</button>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 text-center mb-6">
+                    <p class="text-gray-400 text-sm">記録なし</p>
+                </div>
+
+                <h3 class="text-sm font-semibold text-gray-500 mb-2">入居時の記録</h3>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden mb-4">
+                    <div class="p-3 border-b border-gray-100 flex gap-3">
+                        <div class="w-12 h-12 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center text-gray-400"><i class="fas fa-image"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm text-gray-800">リビング</h4>
+                            <p class="text-xs text-gray-500">床に線キズあり</p>
+                        </div>
+                    </div>
+                    <div class="p-3 flex gap-3">
+                        <div class="w-12 h-12 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center text-gray-400"><i class="fas fa-image"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm text-gray-800">洋室1</h4>
+                            <p class="text-xs text-gray-500">壁紙剥がれ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fab-bottom">
+                <button onclick="navigateTo('view-moveout-detail')" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center hover:bg-red-700 transition active:scale-95">
+                    <i class="fas fa-sign-out-alt mr-2"></i> 退去立会いを開始
+                </button>
+            </div>
+        </div>
+
+        <div id="view-moveout-detail" class="view-screen">
+            <header class="bg-red-600 text-white p-4 shadow-md flex items-center z-10">
+                <i class="fas fa-arrow-left text-xl mr-4 cursor-pointer" onclick="navigateTo('view-property-list')"></i>
+                <h1 class="text-lg font-semibold">退去立会い</h1>
+            </header>
+            
+            <div class="scroll-content p-0">
+                <div class="bg-white p-4 shadow-sm mb-2 border-b-2 border-red-200">
+                    <div class="flex justify-between items-start">
+                        <h2 class="font-bold text-gray-800">メゾン青葉 102号室</h2>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded font-bold">退去点検中</span>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-700 text-sm mb-3">新たに見つかったキズ</h3>
+                    <div id="defect-list-moveout" class="space-y-3">
+                        <div id="empty-defect-msg-moveout" class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <i class="fas fa-search text-3xl text-gray-300 mb-2"></i>
+                            <p class="text-gray-400 text-sm">記録なし</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fab-bottom flex gap-2">
+                <button onclick="openAddDefect('moveout')" class="flex-1 bg-white border-2 border-red-600 text-red-600 font-bold py-3 px-2 rounded-lg shadow-lg flex items-center justify-center hover:bg-red-50 transition active:scale-95 text-sm">
+                    <i class="fas fa-plus mr-1"></i> キズを追加
+                </button>
+                <button onclick="navigateTo('view-signature')" class="flex-1 bg-red-600 text-white font-bold py-3 px-2 rounded-lg shadow-lg flex items-center justify-center hover:bg-red-700 transition active:scale-95 text-sm">
+                    <i class="fas fa-pen mr-1"></i> サインへ進む
+                </button>
+            </div>
+        </div>
+
+        <div id="view-signature" class="view-screen">
+            <header class="bg-white text-gray-800 p-4 shadow-sm flex justify-between items-center z-10 border-b">
+                <div class="flex items-center">
+                    <i class="fas fa-arrow-left text-xl mr-4 cursor-pointer text-gray-500" onclick="navigateTo('view-moveout-detail')"></i>
+                    <h1 class="text-lg font-semibold">入居者サイン</h1>
+                </div>
+                <button class="text-red-600 font-bold" onclick="showCompleteToast('view-property-list')">完了</button>
+            </header>
+            
+            <div class="scroll-content p-4">
+                <div class="mb-4">
+                    <p class="text-sm text-gray-700 mb-2">上記までに記録されたキズ・汚れの内容を確認し、退去時の状況として相違ないことを承認します。</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">ご署名 <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                    <canvas id="signature-pad"></canvas>
+                    <div class="flex justify-end mt-2">
+                        <button onclick="clearSignature()" class="text-sm text-gray-500 underline">書き直す</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-add-360photo" class="view-screen">
+            <header class="bg-white text-gray-800 p-4 shadow-sm flex justify-between items-center z-10 border-b">
+                <div class="flex items-center">
+                    <i class="fas fa-times text-xl mr-4 cursor-pointer text-gray-500" onclick="navigateTo('view-property-detail-102')"></i>
+                    <h1 class="text-lg font-semibold">360度写真の追加</h1>
+                </div>
+                <button class="text-app-blue font-bold" onclick="showCompleteToast('view-property-detail-102')">保存</button>
+            </header>
+            
+            <div class="scroll-content p-4 bg-white">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">部屋 <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                        <select class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3">
+                            <option value="">選択してください</option>
+                            <option value="リビング">リビング</option>
+                            <option value="洋室1">洋室1</option>
+                            <option value="水回り">水回り</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">画像ファイル (Insta360) <span class="text-red-500 text-xs ml-1">(必須)</span></label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-gray-400 bg-gray-50 cursor-pointer hover:bg-gray-100" onclick="simulateCamera('360度画像')">
+                            <i class="fas fa-upload text-3xl mb-2"></i>
+                            <span class="text-sm font-medium mt-2">ファイルを選択</span>
+                            <span class="text-xs mt-1 text-gray-400">PCから選択</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast-container" class="absolute bottom-24 left-0 right-0 flex justify-center pointer-events-none opacity-0 transition-opacity duration-300 z-50">
+            <div id="toast-message" class="bg-gray-800 text-white text-sm px-4 py-2 rounded-full shadow-lg">
+                メッセージ
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentDefectMode = 'inspection';
+
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view-screen').forEach(view => {
+                view.classList.remove('active');
+            });
+            const targetView = document.getElementById(viewId);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+        }
+
+        function simulateCamera(type) {
+            showToast(`${type}写真を撮影・選択しました`);
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const messageEl = document.getElementById('toast-message');
+            messageEl.innerText = msg;
+            container.classList.remove('opacity-0');
+            setTimeout(() => {
+                container.classList.add('opacity-0');
+            }, 2000);
+        }
+
+        function showCompleteToast(returnViewId) {
+            showToast("処理を完了しました");
+            setTimeout(() => {
+                navigateTo(returnViewId);
+            }, 1500);
+        }
+
+        function openAddDefect(mode) {
+            currentDefectMode = mode;
+            navigateTo('view-add-defect');
+        }
+        
+        function goBackFromDefect() {
+            if(currentDefectMode === 'moveout') {
+                navigateTo('view-moveout-detail');
+            } else {
+                navigateTo('view-inspection-detail');
+            }
+        }
+
+        function addDefectAndReturn() {
+            const roomVal = document.getElementById('defect-room').value;
+            const roomName = roomVal ? roomVal : "未選択";
+            const commentVal = document.getElementById('defect-comment').value;
+
+            const newItemHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-3 flex gap-3 animate-[fadeIn_0.3s_ease-out]">
+                    <div class="w-16 h-16 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center text-gray-400 overflow-hidden relative">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-gray-800">${roomName}</h4>
+                        <p class="text-xs text-gray-500 mt-1 line-clamp-2">${commentVal ? commentVal : 'コメントなし'}</p>
+                    </div>
+                </div>
+            `;
+            
+            if(currentDefectMode === 'moveout') {
+                const emptyMsg = document.getElementById('empty-defect-msg-moveout');
+                if(emptyMsg) emptyMsg.style.display = 'none';
+                document.getElementById('defect-list-moveout').insertAdjacentHTML('beforeend', newItemHTML);
+                showToast("キズを記録しました");
+                navigateTo('view-moveout-detail');
+            } else {
+                const emptyMsg = document.getElementById('empty-defect-msg');
+                if(emptyMsg) emptyMsg.style.display = 'none';
+                document.getElementById('defect-list').insertAdjacentHTML('beforeend', newItemHTML);
+                showToast("キズを記録しました");
+                navigateTo('view-inspection-detail');
+            }
+            
+            document.getElementById('defect-room').value = "";
+            document.getElementById('defect-comment').value = "";
+        }
+
+        const canvas = document.getElementById('signature-pad');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        setTimeout(resizeCanvas, 100); 
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        
+        canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+        canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000';
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent("mousedown", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
